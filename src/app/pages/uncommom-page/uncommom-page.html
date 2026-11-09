@@ -1,1 +1,102 @@
-<p>uncommom-page works!</p>,
+
+<section class="mx-5 mb-5">
+<h1 class="text-2xl">Pipes no comunes</h1>
+<h3 class="font-thin">Pipes incluidos en Angular</h3>
+</section>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+   
+   
+<app-card [title]="'i18nSelectPipe'">
+    <p>Content desde el padre</p>
+    <button class="btn btn-primary">Click me</button>
+</app-card>
+
+<app-card [title]="'i18nSelectPipe'">
+    <p>Saludos {{ client().name }}, es un placer {{[client().gender | i18nSelect: invitaionMap]}} a nuestro evento</p>
+    <button class="btn btn-primary" (click)="changeClient()">Cambiar clientee</button>
+</app-card>
+
+<app-card [title]="'i18nPluralPipe'">
+    <p>Actualmente {{[clients().length| i18nPlural: clientsMap()]}}</p>
+    <!-- <p>Actualmente hay {{ clients().length }} personas registradas.</p> -->
+    <button class="btn btn-primary" (click)="eliminarCliente()"
+    [disabled]="clients().length === 0"
+    >Eliminar cliente del turno</button>
+</app-card>
+
+</div>
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+<app-card [title]="'SlicePipe'">
+    <b>Original:</b>
+    <p class="text-info">{{clients().join(', ')}}</p>
+    <b class="mt-2">Slice: 0:2</b>
+        <p class="text-info">{{clients() | slice:0:2}}</p>
+    <b class="mt-2">Slice: 1:2</b>
+        <p class="text-info">{{clients() | slice:1:2}}</p>
+           <b class="mt-2">Slice: 0:1</b>
+        <p class="text-info">{{clients() | slice:0:1}}</p>
+           <b class="mt-2">Slice: 2:2</b>
+        <p class="text-info">{{clients() | slice:2:2}}</p>
+                   <b class="mt-2">Slice: 2:3</b>
+        <p class="text-info">{{clients() | slice:2:3}}</p>
+                     <b class="mt-2">Slice: 0:-3</b>
+        <p class="text-info">{{clients() | slice:0:-3}}</p>
+                    <b class="mt-2">Slice: 3:-3</b>
+        <p class="text-info">{{clients() | slice:3:-3}}</p>
+</app-card>
+
+<app-card [title]="'JsonPipe'">
+    <pre class="text-danger">{{clients()}}</pre>
+    <pre class="text-danger">{{clients() | json}}</pre>
+    <pre class="text-info">{{client()}}</pre>
+    <pre class="text-info">{{client() | json}}</pre>
+    <p class="text-pink-500">{{clients().join(', ')}}</p>
+    <p class="text-pink-500">{{clients().join(', ') | json}}</p>
+</app-card>
+
+
+
+<app-card [title]="'KeyValuePipe'">
+    <p>{{profile}}</p>
+    <p>{{profile |keyvalue}}</p>
+    <p>{{profile |keyvalue |json}}</p>
+
+    <ul>
+        @for (item of profile | keyvalue; track $index) {
+            <li>
+                <strong class="text-primary">{{item.key | titlecase}}: </strong>
+                <span> {{item.value}}</span>
+            </li>
+        }
+    </ul>
+</app-card>
+
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+<app-card [title]="'AsyncPipe'">
+    <p>Promesa: {{promiseValue}}</p>
+    <p>Promesa: {{promiseValue | async}}</p>
+
+
+    @if(promiseValue | async; as valuePromesa) {
+        <p class ="text-success">Promesa: {{valuePromesa}}</p>
+    } @else {
+        <p>Promesa: Cargando...</p>
+    }
+    <h3>
+        Observable:
+    </h3>
+    <p> {{miObservable }}</p>
+    <p> {{miObservable | async}}</p>
+
+@if( miObservable | async; as valueObservable) {
+        <p class ="text-success">Observable: {{valueObservable}}</p>
+    } @else {
+        <p>Esperando el primer valor...</p>
+    }
+
+</app-card>
+</div>
